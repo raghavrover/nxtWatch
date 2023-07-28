@@ -1,0 +1,6 @@
+.link-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-decoration: none;
+}

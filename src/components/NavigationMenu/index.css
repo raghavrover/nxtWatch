@@ -1,0 +1,16 @@
+.link-item {
+  width: 100%;
+  text-decoration: none;
+}
+
+.menu-tab-icon {
+  height: 27px;
+  width: 24px;
+}
+
+@media screen and (min-width: 768px) {
+  .menu-tab-icon {
+    height: 24px;
+    width: 24px;
+  }
+}
