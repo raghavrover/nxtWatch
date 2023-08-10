@@ -72,27 +72,32 @@ class Home extends Component {
         Authorization: `Bearer ${jwtToken}`,
       },
     }
-
-    const response = await fetch(url, options)
-    if (response.ok) {
+    try {
+      const response = await fetch(url, options)
       const data = await response.json()
-      const {videos} = data
-      const formattedVideosData = videos.map(eachItem => ({
-        channel: eachItem.channel,
-        id: eachItem.id,
-        title: eachItem.title,
-        publishedAt: eachItem.published_at,
-        thumbnailUrl: eachItem.thumbnail_url,
-        viewsCount: eachItem.view_count,
-      }))
-      this.setState({
-        videosList: formattedVideosData,
-        apiStatus: apiFetchStatus.success,
-      })
-    } else {
-      this.setState({
-        apiStatus: apiFetchStatus.failure,
-      })
+      if (response.ok) {
+        const {videos} = data
+        const formattedVideosData = videos.map(eachItem => ({
+          channel: eachItem.channel,
+          id: eachItem.id,
+          title: eachItem.title,
+          publishedAt: eachItem.published_at,
+          thumbnailUrl: eachItem.thumbnail_url,
+          viewsCount: eachItem.view_count,
+        }))
+        this.setState({
+          videosList: formattedVideosData,
+          apiStatus: apiFetchStatus.success,
+        })
+      } else {
+        this.setState({
+          apiStatus: apiFetchStatus.failure,
+        })
+        console.log(data.error_msg)
+      }
+    } catch (e) {
+      this.setState({apiStatus: apiFetchStatus.failure})
+      console.log(e.message)
     }
   }
 

@@ -111,3 +111,9 @@ export const ErrorMSg = styled.p`
 
   color: #ff0000;
 `
+
+export const PrefillMsg = styled(ErrorMSg)`
+  font-size: 13px;
+
+  color: #475569;
+`

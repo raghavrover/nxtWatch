@@ -43,7 +43,9 @@ const Header = props => (
         const {history} = props
         Cookies.remove('jwt_token')
         history.replace('/login')
+        document.classList.remove('over-flow')
       }
+
       const DesktopLogoutBtn = (
         <LogoutBtn theme={isLightTheme}>Logout</LogoutBtn>
       )
@@ -51,35 +53,28 @@ const Header = props => (
       const logoutPopupStyle = {
         width: '100%',
         height: '100%',
-        backgroundColor: 'transparent',
+        backgroundColor: 'rgba(0,0,0, 0.5)',
 
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
       }
 
-      const closeMobileMenu = () => {
+      const toggleMobileMenu = () => {
         document
           .getElementById('mobileNavigationMenu')
           .classList.toggle('translate-menu')
         document
           .getElementById('menuCloseIcon')
           .classList.toggle('rotate-close-icon')
-      }
-
-      const toggleMenu = () => {
-        document
-          .getElementById('mobileNavigationMenu')
-          .classList.toggle('translate-menu')
-        document
-          .getElementById('menuCloseIcon')
-          .classList.toggle('rotate-close-icon')
+        document.body.classList.toggle('over-flow')
       }
 
       const toggleLogoutCard = () => {
         document
           .getElementById('mobileLogoutWrapper')
           .classList.toggle('toggle-mobile-logout')
+        document.body.classList.toggle('over-flow')
       }
 
       const renderMobileMenu = () => (
@@ -87,7 +82,7 @@ const Header = props => (
           <MenuCloseIconBtn
             id="menuCloseIcon"
             type="button"
-            onClick={closeMobileMenu}
+            onClick={toggleMobileMenu}
             theme={isLightTheme}
           >
             <MdClose className="nav-item-icon" />
@@ -124,7 +119,6 @@ const Header = props => (
         </Popup>
       )
 
-      // add functionalities here
       const renderMobileNavItems = () => (
         <MobileNavItemsContainer theme={isLightTheme}>
           <MobileNavItem>
@@ -137,7 +131,7 @@ const Header = props => (
             </MobileNavItemBtn>
           </MobileNavItem>
           <MobileNavItem>
-            <MobileNavItemBtn onClick={toggleMenu} type="button">
+            <MobileNavItemBtn onClick={toggleMobileMenu} type="button">
               <GiHamburgerMenu
                 className={
                   isLightTheme ? 'nav-item-icon' : 'dark-theme nav-item-icon'

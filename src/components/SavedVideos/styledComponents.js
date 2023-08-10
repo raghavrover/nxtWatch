@@ -57,7 +57,7 @@ export const SavedVideosTitle = styled.h1`
 `
 
 export const SavedVideosContent = styled.div`
-  height: 93vh;
+  height: calc(100vh - 60px);
   width: 100%;
 
   display: flex;

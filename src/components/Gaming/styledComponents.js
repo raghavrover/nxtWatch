@@ -62,7 +62,7 @@ export const LoaderContainer = styled.div`
 `
 
 export const GamesPageContent = styled.div`
-  height: 93vh;
+  height: calc(100vh - 60px);
   width: 100%;
 
   display: flex;

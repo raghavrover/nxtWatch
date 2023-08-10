@@ -57,7 +57,7 @@ export const TrendingTitle = styled.h1`
 `
 
 export const TrendingVideosContent = styled.div`
-  height: 93vh;
+  height: calc(100vh - 60px);
   width: 100%;
 
   display: flex;

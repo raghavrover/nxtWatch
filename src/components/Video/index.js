@@ -9,7 +9,6 @@ import Header from '../Header'
 import LoaderView from '../Loader'
 import FailureView from '../FailureView'
 import DesktopNavigationTabs from '../NavigationMenuContainer'
-
 import {
   VideoItemContainer,
   VideoItemContent,
@@ -40,6 +39,7 @@ import {
   SaveButton,
   SaveText,
 } from './styledComponents'
+import './index.css'
 
 const apiFetchStatus = {
   initial: 'INITIAL',
@@ -81,26 +81,32 @@ class Video extends Component {
         Authorization: `Bearer ${jwtToken}`,
       },
     }
-
-    const response = await fetch(url, options)
-    if (response.ok) {
+    try {
+      const response = await fetch(url, options)
       const data = await response.json()
-      const videoDetails = data.video_details
-      const {channel} = videoDetails
-      const formattedVideoDetails = this.getFormattedVideoDetails(videoDetails)
-      const formattedChannel = {
-        name: channel.name,
-        profileImageUrl: channel.profile_image_url,
-        subscriberCount: channel.subscriber_count,
-      }
-      const newVideoDetails = {formattedChannel, ...formattedVideoDetails}
+      if (response.ok) {
+        const videoDetails = data.video_details
+        const {channel} = videoDetails
+        const formattedVideoDetails = this.getFormattedVideoDetails(
+          videoDetails,
+        )
+        const formattedChannel = {
+          name: channel.name,
+          profileImageUrl: channel.profile_image_url,
+          subscriberCount: channel.subscriber_count,
+        }
+        const newVideoDetails = {formattedChannel, ...formattedVideoDetails}
 
-      this.setState({
-        apiStatus: apiFetchStatus.success,
-        videoItemData: newVideoDetails,
-      })
-    } else {
-      this.setState({apiStatus: apiFetchStatus.failure})
+        this.setState({
+          apiStatus: apiFetchStatus.success,
+          videoItemData: newVideoDetails,
+        })
+      } else {
+        this.setState({apiStatus: apiFetchStatus.failure})
+        console.log(data.error_msg)
+      }
+    } catch (e) {
+      console.log(e.message)
     }
   }
 

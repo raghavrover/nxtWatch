@@ -13,7 +13,7 @@ export const VideoItemContainer = styled.div`
 `
 export const VideoItemContent = styled.div`
   width: 100%;
-  height: 93vh;
+  height: calc(100vh - 60px);
 
   display: flex;
   justify-content: flex-start;
@@ -21,7 +21,9 @@ export const VideoItemContent = styled.div`
 `
 export const VideoItemDetails = styled.div`
   width: 100%;
+  height: 100%;
   flex-grow: 1;
+  overflow-y: auto;
 
   @media screen and (min-width: 768px) {
     width: 80%;

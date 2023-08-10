@@ -14,17 +14,17 @@ export const MenuTab = styled.li`
   list-style-type: none;
   width: 100%;
   height: 44px;
-  padding-left: 10px;
+  padding-left: 15px;
   transition: background-color, 0.3s ease-in;
 
   background-color: ${props => {
     if (props.theme === true) {
-      if (props.isActiveRoute) {
+      if (props.isActive) {
         return '#e2e8f0'
       }
     }
     // below block is else block of code for the dark theme
-    if (props.isActiveRoute) {
+    if (props.isActive) {
       return '#606060'
     }
     return 'transparent'
@@ -38,10 +38,6 @@ export const MenuTab = styled.li`
     background-color: ${props =>
       props.theme === true ? '#e2e8f0' : '#606060'};
   }
-
-  @media screen and (min-width: 768px) {
-    padding-left: 16px;
-  }
 `
 
 export const TabName = styled.p`
@@ -50,7 +46,7 @@ export const TabName = styled.p`
 
   font-family: 'Roboto';
   font-size: 18px;
-  font-weight: ${props => (props.isActiveRoute ? 500 : 400)};
+  font-weight: ${props => (props.isActive ? 500 : 400)};
   line-height: 1.2;
 
   color: ${props => (props.theme === true ? '#000000' : '#ffffff')};

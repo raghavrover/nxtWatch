@@ -43,27 +43,31 @@ class Trending extends Component {
         Authorization: `Bearer ${jwtToken}`,
       },
     }
-
-    const response = await fetch(url, options)
-    if (response.ok) {
+    try {
+      const response = await fetch(url, options)
       const data = await response.json()
-      const {videos} = data
-      const formattedVideosData = videos.map(eachItem => ({
-        channel: eachItem.channel,
-        id: eachItem.id,
-        title: eachItem.title,
-        publishedAt: eachItem.published_at,
-        thumbnailUrl: eachItem.thumbnail_url,
-        viewCount: eachItem.view_count,
-      }))
+      if (response.ok) {
+        const {videos} = data
+        const formattedVideosData = videos.map(eachItem => ({
+          channel: eachItem.channel,
+          id: eachItem.id,
+          title: eachItem.title,
+          publishedAt: eachItem.published_at,
+          thumbnailUrl: eachItem.thumbnail_url,
+          viewCount: eachItem.view_count,
+        }))
 
-      this.setState({
-        apiStatus: apiFetchStatus.success,
-        videosList: formattedVideosData,
-      })
-    } else {
+        this.setState({
+          apiStatus: apiFetchStatus.success,
+          videosList: formattedVideosData,
+        })
+      } else {
+        this.setState({apiStatus: apiFetchStatus.failure})
+        console.log(data.error_msg)
+      }
+    } catch (e) {
       this.setState({apiStatus: apiFetchStatus.failure})
-      console.log(response.error_msg)
+      console.log(e.message)
     }
   }
 

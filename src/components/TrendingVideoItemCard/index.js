@@ -46,7 +46,11 @@ const TrendingVideoItemCard = props => {
           <>
             <Link to={`/videos/${id}`} className="link-item">
               <VideoItemCard onClick={onVideoSelecting}>
-                <ThumbnailImage src={thumbnailUrl} alt="video thumbnail" />
+                <ThumbnailImage
+                  src={thumbnailUrl}
+                  alt="video thumbnail"
+                  loading="lazy"
+                />
                 <VideoDetailsContainer>
                   <ChannelProfileImage
                     src={formattedChannelData.channelProfileImage}

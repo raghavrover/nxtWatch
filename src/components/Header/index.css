@@ -8,6 +8,10 @@
   transition: color 0.3s ease-in;
 }
 
+.over-flow {
+  overflow-y: hidden;
+}
+
 .md-nav-item-icon {
   height: 28px;
   width: 28px;
@@ -30,5 +34,5 @@
 }
 
 .toggle-mobile-logout {
-  transform: translateY(80%);
+  transform: translateY(100%);
 }

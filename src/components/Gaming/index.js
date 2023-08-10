@@ -39,27 +39,31 @@ class Gaming extends Component {
     const options = {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${jwtToken}`,
+        Authorization: `Bearer ${jwtToken} `,
       },
     }
-
-    const response = await fetch(url, options)
-    if (response.ok) {
+    try {
+      const response = await fetch(url, options)
       const data = await response.json()
-      const {videos} = data
-      const formattedVideosData = videos.map(eachItem => ({
-        id: eachItem.id,
-        title: eachItem.title,
-        thumbnailUrl: eachItem.thumbnail_url,
-        viewCount: eachItem.view_count,
-      }))
-      this.setState({
-        gamesList: formattedVideosData,
-        apiStatus: apiFetchStatus.success,
-      })
-    } else {
+      if (response.ok) {
+        const {videos} = data
+        const formattedVideosData = videos.map(eachItem => ({
+          id: eachItem.id,
+          title: eachItem.title,
+          thumbnailUrl: eachItem.thumbnail_url,
+          viewCount: eachItem.view_count,
+        }))
+        this.setState({
+          gamesList: formattedVideosData,
+          apiStatus: apiFetchStatus.success,
+        })
+      } else {
+        this.setState({apiStatus: apiFetchStatus.failure})
+        console.log(data.error_msg)
+      }
+    } catch (e) {
       this.setState({apiStatus: apiFetchStatus.failure})
-      console.log(response.error_msg)
+      console.log(e.message)
     }
   }
 

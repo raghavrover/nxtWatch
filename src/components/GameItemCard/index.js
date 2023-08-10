@@ -24,7 +24,11 @@ const GameItemCard = props => {
         return (
           <GameCard onClick={onGameSelecting}>
             <Link to={`/videos/${id}`} className="link-item">
-              <GameThumbnail src={thumbnailUrl} alt="video thumbnail" />
+              <GameThumbnail
+                src={thumbnailUrl}
+                alt="video thumbnail"
+                loading="lazy"
+              />
               <GameDetailsContainer>
                 <GameName theme={isLightTheme}>{title}</GameName>
                 <ViewCount

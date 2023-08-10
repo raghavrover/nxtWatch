@@ -4,65 +4,68 @@ import {GiGamepad} from 'react-icons/gi'
 import {MdPlaylistAdd} from 'react-icons/md'
 import {NavigationMenu, MenuTab, TabName} from './styledComponents'
 import NxtWatchContext from '../../context/NxtWatchContext'
+import '../Header/index.css'
 import './index.css'
 
 const activeTabIds = {
   home: 'HOME',
   trending: 'TRENDING',
-  games: 'GAMES',
+  gaming: 'GAMES',
   savedVideos: 'SAVED_VIDEOS',
   videoDetails: 'VIDEO_DETAILS',
 }
+
+// Modular menu tab item
+const MenuTabItem = ({
+  path,
+  theme,
+  eventHandler,
+  icon,
+  isActiveRoute,
+  route,
+}) => (
+  <Link to={path} className="link-item">
+    <MenuTab theme={theme} isActive={isActiveRoute} onClick={eventHandler}>
+      {icon}
+      <TabName isActive={isActiveRoute} theme={theme}>
+        {route}
+      </TabName>
+    </MenuTab>
+  </Link>
+)
 
 const NavigationTabs = () => (
   <NxtWatchContext.Consumer>
     {value => {
       const {activeRouteId, changeActiveRoute, isLightTheme} = value
 
-      const onHomeSelection = () => {
-        changeActiveRoute('HOME')
-      }
-
-      const onTrendingSelection = () => {
-        changeActiveRoute('TRENDING')
-      }
-
-      const onGamesSelection = () => {
-        changeActiveRoute('GAMES')
-      }
-
-      const onSavedVideosSelection = () => {
-        changeActiveRoute('SAVED_VIDEOS')
+      // Using closure to pass callback to the event handler
+      const onTabSelection = tabId => () => {
+        document.body.classList.remove('over-flow')
+        changeActiveRoute(tabId)
       }
 
       return (
         <NavigationMenu>
-          <Link to="/" className="link-item">
-            <MenuTab
-              isActiveRoute={activeRouteId === activeTabIds.home}
-              onClick={onHomeSelection}
-              theme={isLightTheme}
-            >
+          <MenuTabItem
+            path="/"
+            isActiveRoute={activeRouteId === activeTabIds.home}
+            icon={
               <AiFillHome
                 className="menu-tab-icon"
                 color={
                   activeRouteId === activeTabIds.home ? '#de1414' : '#737070'
                 }
               />
-              <TabName
-                isActiveRoute={activeRouteId === activeTabIds.home}
-                theme={isLightTheme}
-              >
-                Home
-              </TabName>
-            </MenuTab>
-          </Link>
-          <Link to="/trending" className="link-item">
-            <MenuTab
-              isActiveRoute={activeRouteId === activeTabIds.trending}
-              onClick={onTrendingSelection}
-              theme={isLightTheme}
-            >
+            }
+            eventHandler={onTabSelection(activeTabIds.home)}
+            theme={isLightTheme}
+            route="Home"
+          />
+          <MenuTabItem
+            path="/trending"
+            isActiveRoute={activeRouteId === activeTabIds.trending}
+            icon={
               <AiTwotoneFire
                 className="menu-tab-icon"
                 color={
@@ -71,40 +74,30 @@ const NavigationTabs = () => (
                     : '#737070'
                 }
               />
-              <TabName
-                isActiveRoute={activeRouteId === activeTabIds.trending}
-                theme={isLightTheme}
-              >
-                Trending
-              </TabName>
-            </MenuTab>
-          </Link>
-          <Link to="/gaming" className="link-item">
-            <MenuTab
-              isActiveRoute={activeRouteId === activeTabIds.games}
-              onClick={onGamesSelection}
-              theme={isLightTheme}
-            >
+            }
+            eventHandler={onTabSelection(activeTabIds.trending)}
+            theme={isLightTheme}
+            route="Trending"
+          />
+          <MenuTabItem
+            path="/gaming"
+            isActiveRoute={activeRouteId === activeTabIds.gaming}
+            icon={
               <GiGamepad
                 className="menu-tab-icon"
                 color={
-                  activeRouteId === activeTabIds.games ? '#de1414' : '#737070'
+                  activeRouteId === activeTabIds.gaming ? '#de1414' : '#737070'
                 }
               />
-              <TabName
-                isActiveRoute={activeRouteId === activeTabIds.games}
-                theme={isLightTheme}
-              >
-                Gaming
-              </TabName>
-            </MenuTab>
-          </Link>
-          <Link to="/saved-videos" className="link-item">
-            <MenuTab
-              isActiveRoute={activeRouteId === activeTabIds.savedVideos}
-              onClick={onSavedVideosSelection}
-              theme={isLightTheme}
-            >
+            }
+            eventHandler={onTabSelection(activeTabIds.gaming)}
+            theme={isLightTheme}
+            route="Gaming"
+          />
+          <MenuTabItem
+            path="/saved-videos"
+            isActiveRoute={activeRouteId === activeTabIds.savedVideos}
+            icon={
               <MdPlaylistAdd
                 className="menu-tab-icon"
                 color={
@@ -113,14 +106,11 @@ const NavigationTabs = () => (
                     : '#737070'
                 }
               />
-              <TabName
-                isActiveRoute={activeRouteId === activeTabIds.savedVideos}
-                theme={isLightTheme}
-              >
-                Saved Videos
-              </TabName>
-            </MenuTab>
-          </Link>
+            }
+            eventHandler={onTabSelection(activeTabIds.savedVideos)}
+            theme={isLightTheme}
+            route="Saved Videos"
+          />
         </NavigationMenu>
       )
     }}

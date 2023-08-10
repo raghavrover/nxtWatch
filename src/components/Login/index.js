@@ -13,13 +13,14 @@ import {
   ShowPasswordContainer,
   ShowPasswordLabel,
   LoginButton,
+  PrefillMsg,
   ErrorMSg,
 } from './styledComponents'
 
 class Login extends Component {
   state = {
-    username: '',
-    password: '',
+    username: 'rahul',
+    password: 'rahul@2021',
     isLoginSuccessful: true,
     showPassword: false,
     errorMsg: '',
@@ -159,6 +160,9 @@ class Login extends Component {
                 <LoginButton type="submit" theme={isLightTheme}>
                   Login
                 </LoginButton>
+                <PrefillMsg>
+                  Login and explore with pre-filled credentials
+                </PrefillMsg>
                 {!isLoginSuccessful && <ErrorMSg>*{errorMsg}</ErrorMSg>}
               </LoginFormContainer>
             </LoginPageContainer>

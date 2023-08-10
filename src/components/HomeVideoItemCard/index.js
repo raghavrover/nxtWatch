@@ -45,7 +45,11 @@ const HomeVideoItemCard = props => {
         return (
           <VideoItemCard onClick={onVideoSelecting}>
             <Link to={`/videos/${id}`} className="link-item">
-              <ThumbnailImage src={thumbnailUrl} alt="video thumbnail" />
+              <ThumbnailImage
+                src={thumbnailUrl}
+                alt="video thumbnail"
+                loading="lazy"
+              />
               <VideoItemDetails>
                 <ChannelImage
                   src={formattedChannelData.channelProfileImage}

@@ -15,7 +15,7 @@ export const HomePageContainer = styled.div`
 
 export const HomePageContent = styled.div`
   width: 100%;
-  height: 93vh;
+  height: calc(100vh - 60px);
   display: flex;
 `
 

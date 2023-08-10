@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const NavBar = styled.nav`
   width: 100%;
-  height: 7vh;
+  height: 60px;
   padding-top: 6px;
   padding-bottom: 6px;
   transition: background-color 0.3s ease-in;
@@ -32,7 +32,7 @@ export const MobileNavigationMenu = styled.div`
   width: 100%;
   height: 100%;
 
-  position: absolute;
+  position: fixed;
   top: 0;
   left: -100%;
   z-index: 1;
@@ -40,7 +40,8 @@ export const MobileNavigationMenu = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  transition: background-color 0.3s ease-in, transform 0.5s ease-in;
+  overflow-y: auto;
+  transition: transform 0.5s ease-in, background-color 0.3s ease-in;
 
   background-color: ${props => (props.theme === true ? '#ffffff' : '#000000')};
 `
@@ -124,16 +125,18 @@ export const LogoutBtn = styled.button`
 
 export const MobileLogoutContainer = styled.div`
   width: 100%;
-  height: 80%;
+  height: 100%;
+  padding-bottom: 60px;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  position: absolute;
-  top: -80%;
+  position: fixed;
+  top: -100%;
   left: 0;
-  background-color: ${props => (props.theme === true ? '#d4d0cf' : '#2e2d2d')};
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
   transition: transform 0.5s ease-in, background-color 0.3s ease-in;
 `
 
@@ -149,12 +152,7 @@ export const LogoutPageCard = styled.div`
   justify-content: center;
   align-items: center;
   transition: background-color 0.3s ease-in;
-
-  background-color: transparent;
-  @media screen and (min-width: 768px) {
-    background-color: ${props =>
-      props.theme === true ? '#ffffff' : '#000000'};
-  }
+  background-color: ${props => (props.theme === true ? '#ffffff' : '#000000')};
 `
 
 export const LogoutPageQuestion = styled.p`
