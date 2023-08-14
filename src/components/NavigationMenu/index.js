@@ -1,7 +1,10 @@
 import {Link} from 'react-router-dom'
-import {AiFillHome, AiTwotoneFire} from 'react-icons/ai'
-import {GiGamepad} from 'react-icons/gi'
-import {MdPlaylistAdd} from 'react-icons/md'
+import {
+  AiFillHome,
+  AiTwotoneFire,
+  GiGamepad,
+  MdPlaylistAdd,
+} from 'react-icons/all'
 import {NavigationMenu, MenuTab, TabName} from './styledComponents'
 import NxtWatchContext from '../../context/NxtWatchContext'
 import '../Header/index.css'

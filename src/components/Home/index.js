@@ -1,8 +1,6 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
-import {MdClose} from 'react-icons/md'
-import {BiSearchAlt2} from 'react-icons/bi'
-
+import {MdClose, BiSearchAlt2} from 'react-icons/all'
 import Header from '../Header'
 import HomeVideoItemCard from '../HomeVideoItemCard'
 import DesktopNavigationTabs from '../NavigationMenuContainer'
@@ -48,17 +46,6 @@ class Home extends Component {
   componentDidMount() {
     this.fetchVideos()
   }
-
-  setHomeAsActiveRoute = () => (
-    <NxtWatchContext.Consumer>
-      {value => {
-        const {changeActiveRoute} = value
-        changeActiveRoute('HOME')
-        console.log('ActiveRoute is HOME')
-        return <></>
-      }}
-    </NxtWatchContext.Consumer>
-  )
 
   fetchVideos = async () => {
     this.setState({apiStatus: apiFetchStatus.fetching})

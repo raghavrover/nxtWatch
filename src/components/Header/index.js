@@ -1,11 +1,13 @@
 import {Link, withRouter} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import Popup from 'reactjs-popup'
-import {BsMoon} from 'react-icons/bs'
-import {BiSun} from 'react-icons/bi'
-import {MdClose} from 'react-icons/md'
-import {GiHamburgerMenu} from 'react-icons/gi'
-import {FiLogOut} from 'react-icons/fi'
+import {
+  BsMoon,
+  BiSun,
+  MdClose,
+  GiHamburgerMenu,
+  FiLogOut,
+} from 'react-icons/all'
 import NavigationTabs from '../NavigationMenu'
 import NxtWatchContext from '../../context/NxtWatchContext'
 import {
@@ -43,7 +45,7 @@ const Header = props => (
         const {history} = props
         Cookies.remove('jwt_token')
         history.replace('/login')
-        document.classList.remove('over-flow')
+        document.body.classList.remove('over-flow')
       }
 
       const DesktopLogoutBtn = (

@@ -12,13 +12,13 @@ export const VideoItemCard = styled.div`
     margin-left: 8px;
   }
 
-  @media screen and (min-width: 920px) and (max-width: 1399px) {
+  @media screen and (min-width: 920px) and (max-width: 1529px) {
     width: 30%;
     margin-right: 8px;
     margin-left: 8px;
   }
 
-  @media screen and (min-width: 1400px) {
+  @media screen and (min-width: 1530px) {
     width: 23%;
     margin-right: 8px;
     margin-left: 8px;
