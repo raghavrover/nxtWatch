@@ -28,7 +28,7 @@ const NotFound = () => (
                 }
                 alt="not found"
               />
-              <NotFoundTitle theme={isLightTheme} title>
+              <NotFoundTitle theme={isLightTheme} title="true">
                 Page Not Found
               </NotFoundTitle>
               <NotFoundTitle theme={isLightTheme} as="p">

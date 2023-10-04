@@ -10,110 +10,85 @@ import NxtWatchContext from '../../context/NxtWatchContext'
 import '../Header/index.css'
 import './index.css'
 
-const activeTabIds = {
-  home: 'HOME',
-  trending: 'TRENDING',
-  gaming: 'GAMES',
-  savedVideos: 'SAVED_VIDEOS',
-  videoDetails: 'VIDEO_DETAILS',
-}
-
-// Modular menu tab item
-const MenuTabItem = ({
-  path,
-  theme,
-  eventHandler,
-  icon,
-  isActiveRoute,
-  route,
-}) => (
-  <Link to={path} className="link-item">
-    <MenuTab theme={theme} isActive={isActiveRoute} onClick={eventHandler}>
-      {icon}
-      <TabName isActive={isActiveRoute} theme={theme}>
-        {route}
-      </TabName>
-    </MenuTab>
-  </Link>
-)
-
 const NavigationTabs = () => (
   <NxtWatchContext.Consumer>
     {value => {
-      const {activeRouteId, changeActiveRoute, isLightTheme} = value
+      const {isLightTheme} = value
 
-      // Using closure to pass callback to the event handler
-      const onTabSelection = tabId => () => {
+      const onTabSelection = () => {
         document.body.classList.remove('over-flow')
-        changeActiveRoute(tabId)
       }
+
+      // Finding Pathname using location property of the document object, with the pathname property of the location object.
+      const isActivePath = path => document.location.pathname === path
+
+      const navMenuTabsContent = [
+        {
+          id: 'menu-tab-1',
+          path: '/',
+          route: 'Home',
+          icon: (
+            <AiFillHome
+              className="menu-tab-icon"
+              color={isActivePath('/') ? '#de1414' : '#737070'}
+            />
+          ),
+        },
+        {
+          id: 'menu-tab-2',
+          path: '/trending',
+          route: 'Trending',
+          icon: (
+            <AiTwotoneFire
+              className="menu-tab-icon"
+              color={isActivePath('/trending') ? '#de1414' : '#737070'}
+            />
+          ),
+        },
+        {
+          id: 'menu-tab-3',
+          path: '/gaming',
+          route: 'Gaming',
+          icon: (
+            <GiGamepad
+              className="menu-tab-icon"
+              color={isActivePath('/gaming') ? '#de1414' : '#737070'}
+            />
+          ),
+        },
+        {
+          id: 'menu-tab-4',
+          path: '/saved-videos',
+          route: 'Saved Videos',
+          icon: (
+            <MdPlaylistAdd
+              className="menu-tab-icon"
+              color={isActivePath('/saved-videos') ? '#de1414' : '#737070'}
+            />
+          ),
+        },
+      ]
 
       return (
         <NavigationMenu>
-          <MenuTabItem
-            path="/"
-            isActiveRoute={activeRouteId === activeTabIds.home}
-            icon={
-              <AiFillHome
-                className="menu-tab-icon"
-                color={
-                  activeRouteId === activeTabIds.home ? '#de1414' : '#737070'
-                }
-              />
-            }
-            eventHandler={onTabSelection(activeTabIds.home)}
-            theme={isLightTheme}
-            route="Home"
-          />
-          <MenuTabItem
-            path="/trending"
-            isActiveRoute={activeRouteId === activeTabIds.trending}
-            icon={
-              <AiTwotoneFire
-                className="menu-tab-icon"
-                color={
-                  activeRouteId === activeTabIds.trending
-                    ? '#de1414'
-                    : '#737070'
-                }
-              />
-            }
-            eventHandler={onTabSelection(activeTabIds.trending)}
-            theme={isLightTheme}
-            route="Trending"
-          />
-          <MenuTabItem
-            path="/gaming"
-            isActiveRoute={activeRouteId === activeTabIds.gaming}
-            icon={
-              <GiGamepad
-                className="menu-tab-icon"
-                color={
-                  activeRouteId === activeTabIds.gaming ? '#de1414' : '#737070'
-                }
-              />
-            }
-            eventHandler={onTabSelection(activeTabIds.gaming)}
-            theme={isLightTheme}
-            route="Gaming"
-          />
-          <MenuTabItem
-            path="/saved-videos"
-            isActiveRoute={activeRouteId === activeTabIds.savedVideos}
-            icon={
-              <MdPlaylistAdd
-                className="menu-tab-icon"
-                color={
-                  activeRouteId === activeTabIds.savedVideos
-                    ? '#de1414'
-                    : '#737070'
-                }
-              />
-            }
-            eventHandler={onTabSelection(activeTabIds.savedVideos)}
-            theme={isLightTheme}
-            route="Saved Videos"
-          />
+          {navMenuTabsContent.map(menuObject => (
+            <MenuTab
+              key={menuObject.id}
+              isActive={isActivePath(menuObject.path)}
+              theme={isLightTheme}
+              onClick={onTabSelection}
+            >
+              <Link to={menuObject.path} className="menu-link-item">
+                {menuObject.icon}
+                <TabName
+                  isActive={isActivePath(menuObject.path)}
+                  theme={isLightTheme}
+                >
+                  {menuObject.route}
+                </TabName>
+              </Link>
+            </MenuTab>
+          ))}
         </NavigationMenu>
       )
     }}

@@ -16,13 +16,14 @@ export const VideoItemCard = styled.div`
     flex-direction: row;
   }
   @media screen and (min-width: 768px) {
-    margin-bottom: 60px;
+    margin-bottom: 40px;
   }
 `
 
 export const ThumbnailImage = styled.img`
   width: 100%;
-  object-fit: fill;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
 
   @media screen and (min-width: 576px) {
     width: 47%;
@@ -50,7 +51,6 @@ export const ChannelProfileImage = styled.img`
   margin-right: 16px;
   border: none;
   border-radius: 25px;
-  margin-top: 4px;
 
   @media screen and (min-width: 567px) {
     display: none;
@@ -71,7 +71,7 @@ export const VideoTitle = styled.p`
 
   font-family: 'Roboto';
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.3;
 
   color: ${props => (props.theme === true ? '#000000' : '#ffffff')};
@@ -89,22 +89,25 @@ export const VideoStatsContainer = styled.div`
 `
 export const ChannelName = styled.p`
   font-family: 'Roboto';
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 2px;
 
   color: ${props => (props.theme === true ? '#000000' : '#ffffff')};
   @media screen and (min-width: 567px) {
+    font-size: 14px;
     margin-right: 10px;
-    margin-bottom: 0;
+    margin-top: 6px;
+    margin-bottom: 6px;
   }
 `
 export const DotSpan = styled.span`
   margin-right: 6px;
   margin-left: 6px;
-  padding-top: 6px;
 
   font-family: 'Roboto';
   font-size: 20px;
+  line-height: 0.4;
   font-weight: 600;
 
   color: ${props => (props.theme === true ? '#000000' : '#cbd5e1')};
@@ -127,8 +130,9 @@ export const VideoStatsList = styled.div`
 
 export const ViewsCountListItem = styled.p`
   font-family: 'Roboto';
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 400;
+  margin-top: 2px;
 
   color: ${props => (props.theme === true ? '#000000' : '#ffffff')};
 `

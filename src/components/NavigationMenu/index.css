@@ -1,6 +1,11 @@
-.link-item {
+.menu-link-item {
   width: 100%;
+  height: 100%;
   text-decoration: none;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .menu-tab-icon {

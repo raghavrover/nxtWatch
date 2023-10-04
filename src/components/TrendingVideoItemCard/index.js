@@ -36,16 +36,12 @@ const TrendingVideoItemCard = props => {
   return (
     <NxtWatchContext.Consumer>
       {value => {
-        const {changeActiveRoute, isLightTheme} = value
-
-        const onVideoSelecting = () => {
-          changeActiveRoute('VIDEO_DETAILS')
-        }
+        const {isLightTheme} = value
 
         return (
           <>
             <Link to={`/videos/${id}`} className="link-item">
-              <VideoItemCard onClick={onVideoSelecting}>
+              <VideoItemCard>
                 <ThumbnailImage
                   src={thumbnailUrl}
                   alt="video thumbnail"

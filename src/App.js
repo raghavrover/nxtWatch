@@ -11,19 +11,10 @@ import NotFound from './components/NotFound'
 import ProtectedRoute from './components/ProtectedRoute'
 import './App.css'
 
-const activeTabIds = {
-  home: 'HOME',
-  trending: 'TRENDING',
-  games: 'GAMES',
-  savedVideos: 'SAVED_VIDEOS',
-  videoDetails: 'VIDEO_DETAILS',
-}
-
 class App extends Component {
   state = {
     isLightTheme: true,
     savedVideosList: [],
-    activeRouteId: activeTabIds.home,
     showAdBanner: true,
     likedVideosList: [],
     dislikedVideosList: [],
@@ -121,28 +112,17 @@ class App extends Component {
     }
   }
 
-  changeRoute = id => {
-    this.setState({activeRouteId: id})
-  }
-
   render() {
-    const {
-      isLightTheme,
-      activeRouteId,
-      showAdBanner,
-      savedVideosList,
-    } = this.state
+    const {isLightTheme, showAdBanner, savedVideosList} = this.state
 
     return (
       <>
         <NxtWatchContext.Provider
           value={{
             isLightTheme,
-            activeRouteId,
             showAdBanner,
             savedVideosList,
             changeTheme: this.changeTheme,
-            changeActiveRoute: this.changeRoute,
             removeBanner: this.removeAdBanner,
             toggleSaveVideo: this.toggleSaveVideo,
             isVideoSaved: this.isVideoSaved,

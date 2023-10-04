@@ -30,10 +30,6 @@ export const MenuTab = styled.li`
     return 'transparent'
   }};
 
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-
   :hover {
     background-color: ${props =>
       props.theme === true ? '#e2e8f0' : '#606060'};

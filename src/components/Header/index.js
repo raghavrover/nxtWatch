@@ -52,6 +52,7 @@ const Header = props => (
         <LogoutBtn theme={isLightTheme}>Logout</LogoutBtn>
       )
 
+      /* pop-up menu style object to pass as an prop */
       const logoutPopupStyle = {
         width: '100%',
         height: '100%',
@@ -62,6 +63,7 @@ const Header = props => (
         alignItems: 'center',
       }
 
+      /* function to toggle mobile menu */
       const toggleMobileMenu = () => {
         document
           .getElementById('mobileNavigationMenu')
@@ -72,6 +74,7 @@ const Header = props => (
         document.body.classList.toggle('over-flow')
       }
 
+      /* function to toggle mobile logout card */
       const toggleLogoutCard = () => {
         document
           .getElementById('mobileLogoutWrapper')
@@ -79,6 +82,7 @@ const Header = props => (
         document.body.classList.toggle('over-flow')
       }
 
+      /* Mobile menu component */
       const renderMobileMenu = () => (
         <MobileNavigationMenu id="mobileNavigationMenu" theme={isLightTheme}>
           <MenuCloseIconBtn
@@ -95,6 +99,7 @@ const Header = props => (
         </MobileNavigationMenu>
       )
 
+      /* Logout card component */
       const renderLogoutCard = callback => (
         <LogoutPageCard theme={isLightTheme}>
           <LogoutPageQuestion theme={isLightTheme}>

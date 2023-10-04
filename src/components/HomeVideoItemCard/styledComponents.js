@@ -6,13 +6,13 @@ export const VideoItemCard = styled.div`
   width: 100%;
   margin-bottom: 20px;
 
-  @media screen and (min-width: 576px) and (max-width: 919px) {
+  @media screen and (min-width: 576px) and (max-width: 1199px) {
     width: 47%;
     margin-right: 8px;
     margin-left: 8px;
   }
 
-  @media screen and (min-width: 920px) and (max-width: 1529px) {
+  @media screen and (min-width: 1200px) and (max-width: 1529px) {
     width: 30%;
     margin-right: 8px;
     margin-left: 8px;
@@ -86,7 +86,7 @@ export const VideoTitle = styled.p`
   color: ${props => (props.theme === true ? '#000000' : '#ffffff')};
 
   @media screen and (min-width: 768px) and (max-width: 1150px) {
-    font-size: 12px;
+    font-size: 14px;
   }
 `
 

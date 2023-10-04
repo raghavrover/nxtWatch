@@ -24,39 +24,31 @@ export const VideoItemDetails = styled.div`
   height: 100%;
   flex-grow: 1;
   overflow-y: auto;
+  padding: 14px;
 
   @media screen and (min-width: 768px) {
     width: 80%;
   }
+
+  @media (min-width: 1200px) {
+    padding: 20px;
+  }
 `
 export const VideoPlayer = styled.div`
   width: 100%;
-  height: 40vh;
-
-  @media screen and (min-width: 768px) and (max-width: 1199px) {
-    height: 50vh;
-    padding: 30px 14px 0 14px;
-  }
-
-  @media screen and (min-width: 1200px) {
-    height: 60vh;
-    width: 70%;
-    padding: 30px 14px 0 14px;
-  }
+  max-width: 1024px;
+  aspect-ratio: 16 / 9;
+  margin-bottom: 14px;
 `
 
 export const VideoDataContainer = styled.div`
   width: 100%;
-  padding: 20px;
+  max-width: 1024px;
 
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-
-  @media screen and (min-width: 1200px) {
-    width: 70%;
-  }
 `
 
 export const VideoDetails = styled.div`
@@ -70,7 +62,8 @@ export const VideoDetails = styled.div`
   align-items: flex-start;
 `
 export const VideoTitle = styled.p`
-  margin-top: 2px;
+  margin-top: 0;
+  padding-top: 0;
   margin-bottom: 5px;
 
   font-family: 'Roboto';
@@ -85,7 +78,9 @@ export const VideoTitle = styled.p`
 `
 export const VideoStatsAndViewCountContainer = styled.div`
   width: 100%;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
+  padding-top: 0;
+  //  border: 1px solid red;
 
   display: flex;
   flex-direction: column;
@@ -112,14 +107,14 @@ export const ViewCount = styled.p`
 `
 export const Dot = styled.span`
   height: 30px;
-  padding-top: 3px;
   margin-right: 4px;
   margin-left: 6px;
+  padding-top: 12px;
 
   font-family: 'Roboto';
   font-size: 24px;
   font-weight: 400;
-  line-height: 1;
+  line-height: 0.4;
   color: ${props => (props.theme === true ? '#00306e' : '#f9f9f9')};
 `
 export const ChannelAndDescriptionContainer = styled.div`
@@ -146,11 +141,15 @@ export const ChannelAndDescriptionContent = styled.div`
   flex-grow: 1;
 `
 export const ChannelThumbnail = styled.img`
-  height: 45px;
-  width: 45px;
+  height: 35px;
+  width: 35px;
   border-radius: 25px;
   margin-right: 16px;
-  margin-top: 8px;
+
+  @media screen and (min-width: 768px) {
+    height: 45px;
+    width: 45px;
+  }
 `
 export const ChannelName = styled.p`
   margin-top: 2px;

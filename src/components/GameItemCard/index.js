@@ -15,14 +15,10 @@ const GameItemCard = props => {
   return (
     <NxtWatchContext.Consumer>
       {value => {
-        const {changeActiveRoute, isLightTheme} = value
-
-        const onGameSelecting = () => {
-          changeActiveRoute('VIDEO_DETAILS')
-        }
+        const {isLightTheme} = value
 
         return (
-          <GameCard onClick={onGameSelecting}>
+          <GameCard>
             <Link to={`/videos/${id}`} className="link-item">
               <GameThumbnail
                 src={thumbnailUrl}

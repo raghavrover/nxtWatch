@@ -17,6 +17,7 @@ const DesktopNavigationTabs = () => (
 
       return (
         <NavigationMenuContainer theme={isLightTheme}>
+          {/* navigation menu tabs component */}
           <NavigationTabs />
           <SocialMediaAndContactUs>
             <ContactUs theme={isLightTheme}>CONTACT US</ContactUs>
