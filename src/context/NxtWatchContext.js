@@ -6,7 +6,6 @@ const NxtWatchContext = React.createContext({
   savedVideosList: [],
   likedVideosList: [],
   dislikedVideosList: [],
-  activeRouteId: 'HOME',
   changeTheme: () => {},
   changeActiveRoute: () => {},
   toggleSaveVideo: () => {},
