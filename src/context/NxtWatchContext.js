@@ -2,18 +2,21 @@ import React from 'react'
 
 const NxtWatchContext = React.createContext({
   isLightTheme: true,
-  showAdBanner: true,
-  savedVideosList: [],
-  likedVideosList: [],
-  dislikedVideosList: [],
   changeTheme: () => {},
-  changeActiveRoute: () => {},
-  toggleSaveVideo: () => {},
+
+  showAdBanner: true,
   removeBanner: () => {},
+
+  savedVideosList: [],
   isVideoSaved: () => {},
+  toggleSaveVideo: () => {},
+
+  likedVideosList: [],
   isVideoLiked: () => {},
-  isVideoDisliked: () => {},
   addVideoReaction: () => {},
+
+  dislikedVideosList: [],
+  isVideoDisliked: () => {},
 })
 
 export default NxtWatchContext

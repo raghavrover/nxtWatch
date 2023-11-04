@@ -137,7 +137,7 @@ export const SearchInput = styled.input`
   font-weight: 400;
 
   color: ${props => (props.theme === true ? '#1e293b' : '#d7dfe9')};
-  background-color: transparent;
+  background-color: transparent;}
 `
 
 export const SearchIconButton = styled.button`

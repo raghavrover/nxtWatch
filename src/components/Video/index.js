@@ -107,6 +107,7 @@ class Video extends Component {
     } catch (e) {
       console.log(e.message)
     }
+    return null
   }
 
   retry = () => {
@@ -127,6 +128,7 @@ class Video extends Component {
         const isSaved = isVideoSaved(videoItemData)
         const isLiked = isVideoLiked(videoItemData)
         const isDisliked = isVideoDisliked(videoItemData)
+
         const onSavingVideo = () => {
           toggleSaveVideo(videoItemData)
         }

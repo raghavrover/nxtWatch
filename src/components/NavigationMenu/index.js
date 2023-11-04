@@ -71,6 +71,7 @@ const NavigationTabs = () => (
 
       return (
         <NavigationMenu>
+          {/* Iterating over the `navMenuTabsContent` to create navigation menu */}
           {navMenuTabsContent.map(menuObject => (
             <MenuTab
               key={menuObject.id}

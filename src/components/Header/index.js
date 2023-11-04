@@ -41,6 +41,7 @@ const Header = props => (
         changeTheme()
       }
 
+      /* Logout functionality */
       const logout = () => {
         const {history} = props
         Cookies.remove('jwt_token')
@@ -52,7 +53,7 @@ const Header = props => (
         <LogoutBtn theme={isLightTheme}>Logout</LogoutBtn>
       )
 
-      /* pop-up menu style object to pass as an prop */
+      /* pop-up menu style object to pass it as an prop */
       const logoutPopupStyle = {
         width: '100%',
         height: '100%',

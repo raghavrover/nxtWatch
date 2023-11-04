@@ -14,8 +14,8 @@ import './App.css'
 class App extends Component {
   state = {
     isLightTheme: true,
-    savedVideosList: [],
     showAdBanner: true,
+    savedVideosList: [],
     likedVideosList: [],
     dislikedVideosList: [],
   }
