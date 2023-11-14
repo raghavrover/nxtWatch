@@ -1,6 +1,7 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import {MdClose, BiSearchAlt2} from 'react-icons/all'
+import axios from 'axios'
 import Header from '../Header'
 import HomeVideoItemCard from '../HomeVideoItemCard'
 import DesktopNavigationTabs from '../NavigationMenuContainer'
@@ -36,6 +37,24 @@ const apiFetchStatus = {
   failure: 'FAILURE',
 }
 
+//   Implementing Debounce Functionality
+const myDebounce = (callBack, timer) => {
+  let timerId
+  // Debounce function
+  const debFun = () => {
+    // If there is a previous timerId(previous 'change' event is triggered)
+    // we're clearing it before it executes, incase if it is not executed.
+    if (timerId) clearTimeout(timerId)
+
+    // Adding a new timer with a call back function
+    timerId = setTimeout(() => {
+      callBack()
+    }, timer)
+  }
+
+  return debFun
+}
+
 class Home extends Component {
   state = {
     searchQuery: '',
@@ -43,53 +62,84 @@ class Home extends Component {
     apiStatus: apiFetchStatus.initial,
   }
 
+  // To hold previous controller value
+  previousController = null
+
+  // 'sendVideoDataRequest' forms a closure with 'myDebounce' function
+  sendVideoDataRequest = myDebounce(() => this.fetchVideos(), 500)
+
+  // Abort Controller Instance to keep track of http requests
+
   componentDidMount() {
     this.fetchVideos()
+  }
+
+  componentWillUnmount() {
+    this.previousController.abort()
   }
 
   fetchVideos = async () => {
     this.setState({apiStatus: apiFetchStatus.fetching})
 
+    // Creating a fresh `AbortController` instance for every HTTP request and
+    // passing the `signal` object of the `controller` as a value to the
+    // signal property in axios configuration
+    const controller = new AbortController()
+    this.previousController = controller
+
     const jwtToken = Cookies.get('jwt_token')
     const {searchQuery} = this.state
+
     const url = `https://apis.ccbp.in/videos/all?search=${searchQuery}`
     const options = {
-      method: 'GET',
       headers: {
         Authorization: `Bearer ${jwtToken}`,
       },
+      signal: controller.signal,
     }
+
     try {
-      const response = await fetch(url, options)
-      const data = await response.json()
-      if (response.ok) {
-        const {videos} = data
-        const formattedVideosData = videos.map(eachItem => ({
-          channel: eachItem.channel,
-          id: eachItem.id,
-          title: eachItem.title,
-          publishedAt: eachItem.published_at,
-          thumbnailUrl: eachItem.thumbnail_url,
-          viewsCount: eachItem.view_count,
-        }))
-        this.setState({
-          videosList: formattedVideosData,
-          apiStatus: apiFetchStatus.success,
-        })
-      } else {
-        this.setState({
-          apiStatus: apiFetchStatus.failure,
-        })
-        console.log(data.error_msg)
+      // Fetching Videos through  Axios
+      const response = await axios.get(url, options)
+      const {data} = response
+      const {videos} = data
+
+      const formattedVideosData = videos.map(eachItem => ({
+        channel: eachItem.channel,
+        id: eachItem.id,
+        title: eachItem.title,
+        publishedAt: eachItem.published_at,
+        thumbnailUrl: eachItem.thumbnail_url,
+        viewsCount: eachItem.view_count,
+      }))
+
+      this.setState({
+        videosList: formattedVideosData,
+        apiStatus: apiFetchStatus.success,
+      })
+    } catch (err) {
+      // Handling the error that raised due to 'request abortion' and returning from the function to not to execute the rest of the function body
+      if (axios.isCancel(err)) {
+        console.log(`Request ${err.message}`)
+        return
       }
-    } catch (e) {
+
+      //   Axios error message from the server
+      console.log(err.response?.data?.error_msg)
+
       this.setState({apiStatus: apiFetchStatus.failure})
-      console.log(e.message)
     }
   }
 
   retry = () => {
     this.fetchVideos()
+  }
+
+  getSearchInput = event => {
+    // In setState method we can pass two arguments, second argument is a
+    // callback(it can access latest state) which will be executed once the
+    // state is updated and it is a optional argument
+    this.setState({searchQuery: event.target.value}, this.sendVideoDataRequest)
   }
 
   renderBuyPremiumCard = () => (
@@ -124,14 +174,6 @@ class Home extends Component {
       }}
     </NxtWatchContext.Consumer>
   )
-
-  getSearchInput = event => {
-    if (event.target.value === '') {
-      this.setState({searchQuery: event.target.value}, this.fetchVideos)
-    } else {
-      this.setState({searchQuery: event.target.value})
-    }
-  }
 
   renderSearchBar = () => {
     const {searchQuery} = this.state

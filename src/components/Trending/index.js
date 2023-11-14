@@ -1,7 +1,7 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import {AiTwotoneFire} from 'react-icons/ai'
-
+import axios from 'axios'
 import Header from '../Header'
 import DesktopNavigationTabs from '../NavigationMenuContainer'
 import LoaderView from '../Loader'
@@ -38,36 +38,31 @@ class Trending extends Component {
     const jwtToken = Cookies.get('jwt_token')
     const url = 'https://apis.ccbp.in/videos/trending'
     const options = {
-      method: 'GET',
       headers: {
         Authorization: `Bearer ${jwtToken}`,
       },
     }
     try {
-      const response = await fetch(url, options)
-      const data = await response.json()
-      if (response.ok) {
-        const {videos} = data
-        const formattedVideosData = videos.map(eachItem => ({
-          channel: eachItem.channel,
-          id: eachItem.id,
-          title: eachItem.title,
-          publishedAt: eachItem.published_at,
-          thumbnailUrl: eachItem.thumbnail_url,
-          viewCount: eachItem.view_count,
-        }))
+      const response = await axios.get(url, options)
+      const {data} = response
+      const {videos} = data
 
-        this.setState({
-          apiStatus: apiFetchStatus.success,
-          videosList: formattedVideosData,
-        })
-      } else {
-        this.setState({apiStatus: apiFetchStatus.failure})
-        console.log(data.error_msg)
-      }
-    } catch (e) {
+      const formattedVideosData = videos.map(eachItem => ({
+        channel: eachItem.channel,
+        id: eachItem.id,
+        title: eachItem.title,
+        publishedAt: eachItem.published_at,
+        thumbnailUrl: eachItem.thumbnail_url,
+        viewCount: eachItem.view_count,
+      }))
+
+      this.setState({
+        apiStatus: apiFetchStatus.success,
+        videosList: formattedVideosData,
+      })
+    } catch (err) {
       this.setState({apiStatus: apiFetchStatus.failure})
-      console.log(e.message)
+      console.log(err?.response?.data?.error_msg)
     }
   }
 

@@ -176,7 +176,7 @@ export const LoaderContainer = styled.div`
 `
 export const NoVideosViewContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: 70%;
   padding: 30px 20px;
 
   display: flex;
