@@ -1,6 +1,7 @@
 import {Component} from 'react'
 import {Redirect} from 'react-router-dom'
 import Cookies from 'js-cookie'
+import axios from 'axios'
 import NxtWatchContext from '../../context/NxtWatchContext'
 import {
   LoginPageContainer,
@@ -41,20 +42,24 @@ class Login extends Component {
       password,
     }
     const url = 'https://apis.ccbp.in/login'
-    const options = {
-      method: 'POST',
-      body: JSON.stringify(userDetailsObject),
-    }
-    const response = await fetch(url, options)
-    const data = await response.json()
-    if (response.ok === true) {
+    const body = JSON.stringify(userDetailsObject)
+
+    try {
+      //   Data Posting through axios
+      const response = await axios.post(url, body)
+      const {data} = response
       const jwtToken = data.jwt_token
+
+      //   Setting Up Cookies
       Cookies.set('jwt_token', jwtToken, {expires: 30})
 
       const {history} = this.props
+      //   Directing user to Home page
       history.replace('/')
-    } else {
-      this.setState({errorMsg: data.error_msg, isLoginSuccessful: false})
+    } catch (error) {
+      const errorMsg = error?.response?.data?.error_msg
+      console.log(errorMsg)
+      this.setState({errorMsg, isLoginSuccessful: false})
     }
   }
 
@@ -87,6 +92,7 @@ class Login extends Component {
                 value={username}
                 onChange={this.getUsername}
                 theme={isLightTheme}
+                autoComplete="true"
               />
             </UsernameInputFieldContainer>
           )
@@ -114,6 +120,7 @@ class Login extends Component {
                 value={password}
                 onChange={this.getPassword}
                 theme={isLightTheme}
+                autoComplete="true"
               />
               <ShowPasswordContainer>
                 <ShowPasswordCheckbox

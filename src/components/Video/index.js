@@ -3,6 +3,7 @@ import ReactPlayer from 'react-player'
 import {formatDistanceToNow} from 'date-fns'
 import {BiLike, BiDislike, MdPlaylistAdd} from 'react-icons/all'
 import Cookies from 'js-cookie'
+import axios from 'axios'
 import NxtWatchContext from '../../context/NxtWatchContext'
 import Header from '../Header'
 import LoaderView from '../Loader'
@@ -69,43 +70,41 @@ class Video extends Component {
 
   getVideoItemDetails = async () => {
     this.setState({apiStatus: apiFetchStatus.fetching})
+
     const {match} = this.props
     const {params} = match
     const {id} = params
     const jwtToken = Cookies.get('jwt_token')
+
     const url = `https://apis.ccbp.in/videos/${id}`
     const options = {
-      method: 'GET',
       headers: {
         Authorization: `Bearer ${jwtToken}`,
       },
     }
-    try {
-      const response = await fetch(url, options)
-      const data = await response.json()
-      if (response.ok) {
-        const videoDetails = data.video_details
-        const {channel} = videoDetails
-        const formattedVideoDetails = this.getFormattedVideoDetails(
-          videoDetails,
-        )
-        const formattedChannel = {
-          name: channel.name,
-          profileImageUrl: channel.profile_image_url,
-          subscriberCount: channel.subscriber_count,
-        }
-        const newVideoDetails = {formattedChannel, ...formattedVideoDetails}
 
-        this.setState({
-          apiStatus: apiFetchStatus.success,
-          videoItemData: newVideoDetails,
-        })
-      } else {
-        this.setState({apiStatus: apiFetchStatus.failure})
-        console.log(data.error_msg)
+    try {
+      //   Data Fetching through axios
+      const response = await axios.get(url, options)
+      const {data} = response
+      const videoDetails = data.video_details
+      const {channel} = videoDetails
+
+      const formattedVideoDetails = this.getFormattedVideoDetails(videoDetails)
+      const formattedChannel = {
+        name: channel.name,
+        profileImageUrl: channel.profile_image_url,
+        subscriberCount: channel.subscriber_count,
       }
-    } catch (e) {
-      console.log(e.message)
+      const newVideoDetails = {formattedChannel, ...formattedVideoDetails}
+
+      this.setState({
+        apiStatus: apiFetchStatus.success,
+        videoItemData: newVideoDetails,
+      })
+    } catch (err) {
+      this.setState({apiStatus: apiFetchStatus.failure})
+      console.log(err?.response?.data?.error_msg)
     }
     return null
   }
