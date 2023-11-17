@@ -22,7 +22,6 @@ class Login extends Component {
   state = {
     username: 'rahul',
     password: 'rahul@2021',
-    isLoginSuccessful: true,
     showPassword: false,
     errorMsg: '',
   }
@@ -33,6 +32,18 @@ class Login extends Component {
 
   getPassword = event => {
     this.setState({password: event.target.value})
+  }
+
+  verifyInputFields = (username, password) => {
+    // Implementing Regular Expressions to validate input fields
+    const isUsernameValid = /^[\w_.@$#]{4,}$/.test(username.trim())
+    const isPwdValid = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+={}[\]'":;<>,.?~\-|\\]).{8,}$/.test(
+      password.trim(),
+    )
+
+    if (!isUsernameValid) return 'Invalid username'
+    if (!isPwdValid) return 'Invalid password'
+    return 'valid'
   }
 
   authenticateUser = async () => {
@@ -59,12 +70,34 @@ class Login extends Component {
     } catch (error) {
       const errorMsg = error?.response?.data?.error_msg
       console.log(errorMsg)
-      this.setState({errorMsg, isLoginSuccessful: false})
+      this.setState({errorMsg})
     }
   }
 
   onFormSubmit = event => {
     event.preventDefault()
+
+    const {username, password} = this.state
+    // verifying input fields
+    const validity = this.verifyInputFields(username, password)
+    switch (validity) {
+      case 'Invalid username':
+        this.setState({
+          errorMsg: 'Please enter a valid username',
+        })
+        return
+
+      case 'Invalid password':
+        this.setState({
+          errorMsg: 'Please enter a valid password',
+        })
+        return
+
+      default:
+        break
+    }
+
+    // Proceeding to authentication
     this.authenticateUser()
   }
 
@@ -140,7 +173,7 @@ class Login extends Component {
   }
 
   render() {
-    const {isLoginSuccessful, errorMsg} = this.state
+    const {errorMsg} = this.state
     const jwtToken = Cookies.get('jwt_token')
     if (jwtToken !== undefined) {
       return <Redirect to="/" />
@@ -171,7 +204,7 @@ class Login extends Component {
                 <PrefillMsg>
                   Login and explore with pre-filled credentials
                 </PrefillMsg>
-                {!isLoginSuccessful && <ErrorMSg>*{errorMsg}</ErrorMSg>}
+                {errorMsg && <ErrorMSg>*{errorMsg}</ErrorMSg>}
               </LoginFormContainer>
             </LoginPageContainer>
           )
